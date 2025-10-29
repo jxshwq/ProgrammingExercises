@@ -21,8 +21,38 @@ let rec is_palindrome word =
         let newWord = String.sub word1 1 (String.length word1 - 2)
     in  is_palindrome newWord
 
-(* let char_in_string c s = 
-    let rec char_in_string_helper = 
-        match c with
-        | [] -> true
-        | a::str *)
+let char_in_string = String.contains
+
+let (-) s1 s2 = 
+    s1
+    |> String.to_seq
+    |> Seq.filter (fun c -> not (String.contains s2 c))
+    |> String.of_seq
+
+let rec update_char_count c counts = 
+    match counts with 
+    | [] -> [(c, 1)]
+    | (ch, n):: rest -> if c = ch then (ch, n+1):: rest
+                        else (ch, n) :: (update_char_count c rest) 
+
+let rec checkPresenza char lista =
+    match lista with 
+    | [] -> false
+    | hd::tl -> if char = hd then true else checkPresenza char tl
+
+let count_char s = 
+    s
+    |> String.to_seq
+    |> List.of_seq
+    |> List.fold_left (fun counts c -> update_char_count c counts) [] 
+
+let compare_by_char (c1, _) (c2, _) = 
+  Char.compare c1 c2;;
+
+let sort_counts lst = 
+  List.sort compare_by_char lst;;
+
+let are_anagrams s1 s2 = 
+    let counts1 = count_char s1 |> sort_counts in 
+    let counts2 = count_char s2 |> sort_counts in
+    counts1 = counts2 

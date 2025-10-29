@@ -5,10 +5,10 @@ let noble_gases = [("helium", 2); ("radeon", 10); ("argon", 10); ("krypton", 36)
 let (>:) a b = 
   (snd a) - (snd b)
 
-let max a b = if (a >: b >= 0) then a else b;;
+  let max a b = if (a >: b >= 0) then a else b;;
 
-let heaviest lst = 
-  List.fold_left max (List.hd lst) (List.tl lst) ;;
+  let heaviest lst = 
+    List.fold_left max (List.hd lst) (List.tl lst) ;;
 
 let sort_ascending lst = List.sort (>:) lst ;;
 
